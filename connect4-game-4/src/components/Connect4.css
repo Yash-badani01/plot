@@ -237,60 +237,133 @@
   }
 }
 
+/* ========================================
+   ENHANCED REALISTIC TOKEN ANIMATIONS
+   ======================================== */
+
+/* SMOOTH GRAVITY FALL - For player tokens */
 @keyframes fall {
   0% {
     opacity: 1;
-    transform: translateY(-180px) scale(1.1);
+    transform: translateY(-300px) scale(1);
   }
-  20% {
+  15% {
     opacity: 1;
-    transform: translateY(-150px) scale(1.05);
+    transform: translateY(-250px) scale(0.98);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-180px) scale(0.96);
   }
   50% {
     opacity: 1;
     transform: translateY(-80px) scale(1);
   }
-  80% {
+  75% {
     opacity: 1;
-    transform: translateY(-10px) scale(1);
+    transform: translateY(-15px) scale(1.02);
+  }
+  85% {
+    opacity: 1;
+    transform: translateY(5px) scale(0.98);
+  }
+  95% {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
   }
   100% {
-    opacity: 0;
+    opacity: 1;
     transform: translateY(0) scale(1);
   }
 }
 
+/* SPINNING FALL - For AI tokens with rotation */
 @keyframes slideDown {
   0% {
     opacity: 1;
-    transform: translateY(-300px) scale(1.15);
+    transform: translateY(-300px) rotateZ(0deg) scale(1);
   }
   10% {
     opacity: 1;
-    transform: translateY(-280px) scale(1.1);
+    transform: translateY(-250px) rotateZ(45deg) scale(0.99);
   }
-  30% {
+  25% {
     opacity: 1;
-    transform: translateY(-150px) scale(1.05);
+    transform: translateY(-180px) rotateZ(90deg) scale(0.98);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-100px) rotateZ(180deg) scale(0.99);
   }
   60% {
     opacity: 1;
-    transform: translateY(-40px) scale(1);
+    transform: translateY(-30px) rotateZ(360deg) scale(1);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(8px) rotateZ(540deg) scale(1.02);
   }
   90% {
     opacity: 1;
-    transform: translateY(-5px) scale(1);
+    transform: translateY(-3px) rotateZ(720deg) scale(0.99);
   }
   100% {
-    opacity: 0;
-    transform: translateY(0) scale(1);
+    opacity: 1;
+    transform: translateY(0) rotateZ(720deg) scale(1);
+  }
+}
+
+/* BOUNCE EFFECT - After token lands */
+@keyframes tokenBounce {
+  0% { 
+    transform: translateY(0);
+  }
+  25% { 
+    transform: translateY(8px);
+  }
+  50% { 
+    transform: translateY(0);
+  }
+  75% { 
+    transform: translateY(3px);
+  }
+  100% { 
+    transform: translateY(0);
   }
 }
 
 .piece.falling {
-  animation: slideDown 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation: slideDown 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
+
+.piece.bouncing {
+  animation: tokenBounce 0.4s ease-out forwards;
+}
+
+/* ========================================
+   ANIMATION TIMING & PHYSICS NOTES
+   ======================================== */
+
+/* 
+  CUBIC-BEZIER(0.34, 1.56, 0.64, 1):
+  - Creates natural "overshoot" effect
+  - Makes tokens feel heavy with gravity
+  - Slightly bounces on landing
+  - Most realistic physics curve
+  
+  ANIMATION SEQUENCE:
+  - 0-1200ms: Token falls with spin
+  - 1200ms: Landing animation starts
+  - 1200-1600ms: Bounce effect plays
+  - 1600ms+: Token settles in place
+  
+  SCALE CHANGES:
+  - Squashes slightly during fall (0.96-0.99)
+  - Expands on impact (1.02)
+  - Returns to normal size (1.0)
+  - Creates rubber ball effect
+*/
 
 .hover-indicator {
   width: 40px;
