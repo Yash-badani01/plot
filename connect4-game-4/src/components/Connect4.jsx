@@ -190,7 +190,7 @@ const Connect4 = () => {
     for (let col of validMoves) {
       const result = placePiece(col, 'magic', boardState);
       if (result.board) {
-        const score = minimax(result.board, 7, false, -Infinity, Infinity);
+        const score = minimax(result.board, 8, false, -Infinity, Infinity);
         if (score > bestScore) {
           bestScore = score;
           bestCol = col;
